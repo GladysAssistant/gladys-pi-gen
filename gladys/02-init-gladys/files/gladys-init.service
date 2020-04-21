@@ -1,0 +1,12 @@
+[Unit]
+Description=Initialize Gladys Assistant containers
+After=getty.target
+
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/var/lib/gladysassistant/init-containers.sh
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target

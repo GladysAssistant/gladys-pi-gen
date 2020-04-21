@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=gladys
+Description=Raspberry Pi Gladys Splash
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/gladys
+ScriptFile=/usr/share/plymouth/themes/gladys/gladys.script
