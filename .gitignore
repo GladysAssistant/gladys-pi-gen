@@ -4,3 +4,5 @@ postrun.sh
 .pc
 *-pc
 apt-cacher-ng/
+gladys/03-prepare-docker/files/gladys.tar
+gladys/03-prepare-docker/files/watchtower.tar

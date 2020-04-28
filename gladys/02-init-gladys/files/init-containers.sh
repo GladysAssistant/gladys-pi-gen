@@ -2,6 +2,17 @@
 
 TIMEZONE=$(cat /etc/timezone)
 
+if [ -f "/tmp/watchtower.tar" ]; then
+  logger -t "gladys-init" "Loading watchtower.tar image...."
+  docker load --input /tmp/watchtower.tar
+  rm /tmp/watchtower.tar
+fi
+if [ -f "/tmp/gladys.tar" ]; then
+  logger -t "gladys-init" "Loading gladys.tar image...."
+  docker load --input /tmp/gladys.tar
+  rm /tmp/gladys.tar
+fi
+
 result=$(docker images -q watchtower)
 
 if [ -n "$result" ]; then
