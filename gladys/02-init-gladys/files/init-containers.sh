@@ -36,6 +36,7 @@ else
     --restart=always \
     --privileged \
     --network=host \
+    --log-opt max-size=10m \
     --name gladys \
     -e NODE_ENV=production \
     -e SERVER_PORT=80 \
