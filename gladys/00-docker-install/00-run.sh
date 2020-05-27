@@ -1,6 +1,6 @@
 #!/bin/bash -e
-on_chroot << EOF
 
+on_chroot <<EOF
 echo Patching certs...
 c_rehash /etc/ssl/certs
 EOF

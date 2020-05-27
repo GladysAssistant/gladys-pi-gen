@@ -1,0 +1,30 @@
+# Aeotec Zwave S2
+SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", SYMLINK+="tty-usb-zwave"
+# Aeotec Zwave Gen5
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0658", ATTRS{idProduct}=="0200", SYMLINK+="tty-usb-zwave"
+# ZWave.me UZB1 stick
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0658", ATTRS{idProduct}=="0280", SYMLINK+="tty-usb-zwave"
+# Nortek Security & Control HUSBZB-1
+SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="8a2a", SYMLINK+="tty-usb-zwave-zigbee"
+
+
+# zigbee2mqtt
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0451", ATTRS{idProduct}=="16a8", SYMLINK+="tty-usb-zigbee"
+
+
+# Arduino Uno
+SUBSYSTEM=="tty", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="0043", SYMLINK+="tty-usb-arduino-uno"
+# Arduino Nano
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SYMLINK+="tty-usb-arduino-nano"
+# Arduino Due - Blue board
+SUBSYSTEM=="tty", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="003d", SYMLINK+="tty-usb-arduino-bluedue"
+# Arduino Due - Green board
+SUBSYSTEM=="tty", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="003e", SYMLINK+="tty-usb-arduino-greendue"
+# Arduino MEGA2560 R3
+SUBSYSTEM=="tty", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="0010", SYMLINK+="tty-usb-arduino-r3"
+# Arduino Leonardo
+SUBSYSTEM=="tty", ATTRS{idVendor}=="2a03", ATTRS{idProduct}=="8040", SYMLINK+="tty-usb-arduino-leonardo"
+# Arduino Yun
+SUBSYSTEM=="tty", ATTRS{idVendor}=="2a03", ATTRS{idProduct}=="8041", SYMLINK+="tty-usb-arduino-yun"
+# Arduino Mega ADK R3
+SUBSYSTEM=="tty", ATTRS{idVendor}=="2a03", ATTRS{idProduct}=="0044", SYMLINK+="tty-usb-arduino-mega"

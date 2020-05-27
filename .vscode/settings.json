@@ -1,0 +1,6 @@
+{
+    "files.exclude": {
+        "deploy": true,
+        "work": true
+    }
+}
