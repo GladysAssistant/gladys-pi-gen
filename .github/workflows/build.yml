@@ -30,7 +30,7 @@ jobs:
       - name: Check prepared images
         run: |
           ls -al ./deploy
-          test -f ./deploy/*gladys-os-rpi.zip
+          test -f ./deploy/*gladys-os-rpi-lite.zip
       - name: Upload artifacts for release job
         uses: actions/upload-artifact@v2
         with:
