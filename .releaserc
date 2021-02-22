@@ -22,7 +22,7 @@
           "@semantic-release/github", 
           {
             "assets": [
-              {"path": "gladys-os-lite.zip", "label": "Gladys OS image for Raspberry Pi SD Card"},
+              {"path": "gladys-os-rpi.zip", "label": "Gladys OS image for Raspberry Pi SD Card"},
             ]
           }
         ]

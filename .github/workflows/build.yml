@@ -1,7 +1,10 @@
 name: Gladys OS Build
 
-on:
-  workflow_dispatch:
+on:  
+  push:
+    branches: [ gladys ]
+  pull_request:
+    branches: [ gladys ]
 
 jobs:
   build:
@@ -27,7 +30,7 @@ jobs:
       - name: Check prepared images
         run: |
           ls -al ./deploy
-          test -f ./deploy/*gladys-os-lite.zip
+          test -f ./deploy/*gladys-os-rpi.zip
       - name: Upload artifacts for release job
         uses: actions/upload-artifact@v2
         with:
@@ -38,6 +41,8 @@ jobs:
     name: Release a new image
     needs: build
     runs-on: ubuntu-20.04
+    # trigger a release only when there is a direct commit or PR merge on the master branch
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/gladys' }}
     steps:
       - name: Checkout
         # checkout repo to access custom semantic release scripts
@@ -61,11 +66,10 @@ jobs:
             @semantic-release/git        
           branches: |    
             [
-              'main', 
+              'gladys', 
             ]
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Log new release info
         if: steps.semrel.outputs.new_release_published == 'true'
         run: |

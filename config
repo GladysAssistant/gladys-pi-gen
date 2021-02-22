@@ -1,10 +1,11 @@
-IMG_NAME='gladys-os'
+IMG_DATE="gladys-os"
+IMG_NAME="rpi"
 USE_QEMU=0
 HOSTNAME='gladys'
 ENABLE_SSH=1
 FIRST_USER_NAME='gladys'
 KEYBOARD_KEYMAP='fr'
 TIMEZONE_DEFAULT='Europe/Paris'
-STAGE_LIST="stage0 stage1 stage2 gladys"
+STAGE_LIST='stage0 stage1 stage2 gladys'
 RELEASE=buster
 DEPLOY_ZIP=1
