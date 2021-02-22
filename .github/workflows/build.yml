@@ -1,0 +1,81 @@
+name: Gladys OS Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04   
+    if: "! contains(github.event.head_commit.message, '[skip ci]')"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get the version (git tag)
+        id: get_version
+        run: |
+          echo ${GITHUB_REF/refs\/tags\//}
+          echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      - name: Install pi-gen required dependencies
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update --fix-missing
+          sudo apt-get install -y coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools bsdtar libcap2-bin grep rsync xz-utils file git curl bc qemu-utils kpartx
+          sudo apt-get install -y qemu-user-static
+      - name: Run pi-gen script
+        run: |
+          mkdir ./gladys/03-prepare-docker/files
+          sudo CLEAN=1 BUILD_VERSION=${{ steps.get_version.outputs.VERSION }} ./build.sh -c config
+      - name: Check prepared images
+        run: |
+          ls -al ./deploy
+          test -f ./deploy/*gladys-os-rpi.zip
+      - name: Upload artifacts for release job
+        uses: actions/upload-artifact@v2
+        with:
+          name: deploy
+          path: |
+            ./deploy
+  release:
+    name: Release a new image
+    needs: build
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        # checkout repo to access custom semantic release scripts
+        uses: actions/checkout@v2
+      - name: Download deploy artifacts from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: deploy
+#          path: ./gladys-os-rpi-image/
+      - name: List checkout and deployment artifacts
+        run: |
+          pwd
+          ls -alR
+      - name: Semantic Release
+        id: semrel
+        uses: cycjimmy/semantic-release-action@v2
+        with:
+          # You can specify specifying version range for the extra plugins if you prefer.
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git        
+          branches: |    
+            [
+              'main', 
+            ]
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Log new release info
+        if: steps.semrel.outputs.new_release_published == 'true'
+        run: |
+          echo ${{ steps.semrel.outputs.new_release_version }}
+          echo ${{ steps.semrel.outputs.new_release_major_version }}
+          echo ${{ steps.semrel.outputs.new_release_minor_version }}
+          echo ${{ steps.semrel.outputs.new_release_patch_version }}
+      - name: Finalizing run
+        run: |
+          echo Finishing pi-gen script...
+          echo Gladys OS rpi image build finished successfully!
+  

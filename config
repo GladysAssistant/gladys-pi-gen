@@ -1,9 +1,10 @@
-IMG_NAME='Gladys'
+IMG_NAME='gladys-os'
 USE_QEMU=0
-APT_PROXY=http://192.168.1.42:3142
-HOSTNAME='Gladys'
+HOSTNAME='gladys'
 ENABLE_SSH=1
 FIRST_USER_NAME='gladys'
 KEYBOARD_KEYMAP='fr'
 TIMEZONE_DEFAULT='Europe/Paris'
 STAGE_LIST="stage0 stage1 stage2 gladys"
+RELEASE=buster
+DEPLOY_ZIP=1
