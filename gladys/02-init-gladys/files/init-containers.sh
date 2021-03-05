@@ -14,7 +14,7 @@ else
   docker run -d \
     --name gladys-setup-in-progress \
     --network=host \
-    gladysassistant/gladys-setup-in-progress
+    vonox/gladys-setup-in-progress
 fi
 
 if [ -n "$docker_images_watchtower" ]; then
