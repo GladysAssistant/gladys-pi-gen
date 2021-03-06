@@ -2,9 +2,8 @@ name: Gladys OS Build
 
 on:  
   push:
-    branches: [ gladys ]
-  pull_request:
-    branches: [ gladys ]
+    tags:
+    - 'v*'
 
 jobs:
   build:
@@ -30,54 +29,24 @@ jobs:
         run: |
           ls -al ./deploy
           test -f ./deploy/*gladys-os-rpi-lite.zip
-      - name: Upload artifacts for release job
-        uses: actions/upload-artifact@v2
-        with:
-          name: deploy
-          path: |
-            ./deploy
-  release:
-    name: Release a new image
-    needs: build
-    runs-on: ubuntu-20.04
-    # trigger a release only when there is a direct commit or PR merge on the master branch
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/gladys' }}
-    steps:
-      - name: Checkout
-        # checkout repo to access custom semantic release scripts
-        uses: actions/checkout@v2
-      - name: Download deploy artifacts from build job
-        uses: actions/download-artifact@v2
-        with:
-          name: deploy
-#          path: ./gladys-os-rpi-image/
-      - name: List checkout and deployment artifacts
-        run: |
-          pwd
-          ls -alR
-      - name: Semantic Release
-        id: semrel
-        uses: cycjimmy/semantic-release-action@v2
-        with:
-          # You can specify specifying version range for the extra plugins if you prefer.
-          extra_plugins: |
-            @semantic-release/changelog
-            @semantic-release/git        
-          branches: |    
-            [
-              'gladys', 
-            ]
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Log new release info
-        if: steps.semrel.outputs.new_release_published == 'true'
-        run: |
-          echo ${{ steps.semrel.outputs.new_release_version }}
-          echo ${{ steps.semrel.outputs.new_release_major_version }}
-          echo ${{ steps.semrel.outputs.new_release_minor_version }}
-          echo ${{ steps.semrel.outputs.new_release_patch_version }}
-      - name: Finalizing run
-        run: |
-          echo Finishing pi-gen script...
-          echo Gladys OS rpi image build finished successfully!
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./deploy/*gladys-os-rpi-lite.zip
+          asset_name: gladys-os-rpi-lite-${{ github.ref }}.zip
+          asset_content_type: application/zip
   
