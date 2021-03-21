@@ -4,9 +4,9 @@ TIMEZONE=$(cat /etc/timezone)
 
 docker_images_watchtower=$(docker images -q containrrr/watchtower)
 docker_images_gladys=$(docker images -q gladysassistant/gladys)
-docker_images_gladyssetup=$(docker images -q vonox/gladys-setup-in-progress)
+docker_images_gladyssetup=$(docker images -q gladysassistant/gladys-setup-in-progress)
 
-# First boot, we need to be sure Landing image / container exist
+
 if [ -n "$docker_images_gladyssetup" ]; then
   logger -t "gladys-init" "Gladys Setup Progress image exist, Cool...."
 else
@@ -15,7 +15,7 @@ else
     --name gladys-setup-in-progress \
     --network=host \
     --log-opt max-size=1m \
-    vonox/gladys-setup-in-progress
+    gladysassistant/gladys-setup-in-progress
 fi
 
 if [ -n "$docker_images_watchtower" ]; then
@@ -36,7 +36,7 @@ if [ -n "$docker_images_gladys" ]; then
 else
   logger -t "gladys-init" "Gladys image is missing, pulling them...."
   docker pull gladysassistant/gladys:v4
-  logger -t "gladys-init" "Gladys image is pulled, deleting landing container"
+  logger -t "gladys-init" "Gladys image is pulled, deleting setup container"
   docker stop gladys-setup-in-progress && docker rm gladys-setup-in-progress
   logger -t "gladys-init" "Gladys container is missing, creating them...."
   docker run -d \
