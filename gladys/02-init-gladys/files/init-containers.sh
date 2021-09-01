@@ -45,7 +45,6 @@ else
     --log-opt max-size=10m \
     --name gladys \
     --cap-add SYS_RAWIO \
-    --device /dev/mem \
     -e NODE_ENV=production \
     -e SERVER_PORT=80 \
     -e TZ=${TIMEZONE} \
@@ -54,5 +53,6 @@ else
     -v /var/lib/gladysassistant:/var/lib/gladysassistant \
     -v /dev:/dev \
     -v /run/udev:/run/udev:ro \
+    -v /sys/class/gpio:/sys/class/gpio \
     gladysassistant/gladys:v4
 fi
