@@ -6,7 +6,6 @@ docker_images_watchtower=$(docker images -q containrrr/watchtower)
 docker_images_gladys=$(docker images -q gladysassistant/gladys)
 docker_images_gladyssetup=$(docker images -q gladysassistant/gladys-setup-in-progress)
 
-
 if [ -n "$docker_images_gladyssetup" ]; then
   logger -t "gladys-init" "Gladys Setup Progress image exist, Cool...."
 else
@@ -45,6 +44,7 @@ else
     --network=host \
     --log-opt max-size=10m \
     --name gladys \
+    --cap-add SYS_RAWIO \
     -e NODE_ENV=production \
     -e SERVER_PORT=80 \
     -e TZ=${TIMEZONE} \
@@ -53,5 +53,6 @@ else
     -v /var/lib/gladysassistant:/var/lib/gladysassistant \
     -v /dev:/dev \
     -v /run/udev:/run/udev:ro \
+    -v /sys/class/gpio:/sys/class/gpio \
     gladysassistant/gladys:v4
 fi
