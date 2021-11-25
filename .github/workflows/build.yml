@@ -32,12 +32,12 @@ jobs:
         name: ✔️ Check prepared images
         run: |
           ls -al ./deploy
-          test -f ./deploy/image_gladys-os-rpi-lite.zip
+          test -f ./deploy/image_gladys-os-rpi.zip
       - 
         name: 🏷️ Rename files for release
         run: |
-          sudo mv ./deploy/gladys-os-rpi-lite.info ./gladys-os-rpi-lite-${{ steps.get_version.outputs.VERSION }}.info
-          sudo mv ./deploy/image_gladys-os-rpi-lite.zip ./gladys-os-rpi-lite-${{ steps.get_version.outputs.VERSION }}.zip
+          sudo mv ./deploy/gladys-os-rpi.info ./gladys-os-rpi-${{ steps.get_version.outputs.VERSION }}.info
+          sudo mv ./deploy/image_gladys-os-rpi.zip ./gladys-os-rpi-${{ steps.get_version.outputs.VERSION }}.zip
       - 
         name: 📦 Release
         uses: softprops/action-gh-release@v1
@@ -45,5 +45,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            gladys-os-rpi-lite-${{ steps.get_version.outputs.VERSION }}.info
-            gladys-os-rpi-lite-${{ steps.get_version.outputs.VERSION }}.zip
+            gladys-os-rpi-${{ steps.get_version.outputs.VERSION }}.info
+            gladys-os-rpi-${{ steps.get_version.outputs.VERSION }}.zip
