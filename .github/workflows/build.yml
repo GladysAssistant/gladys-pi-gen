@@ -25,10 +25,6 @@ jobs:
           sudo apt-get update --fix-missing
           sudo apt-get install -y coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc qemu-utils kpartx
       - 
-        name: 🚫 Disable Noobs export
-        run: |
-          rm ./stage2/EXPORT_NOOBS
-      - 
         name: 🍓 Building Raspberry image
         run: |
           sudo CLEAN=1 BUILD_VERSION=${{ steps.get_version.outputs.VERSION }} ./build.sh -c config
