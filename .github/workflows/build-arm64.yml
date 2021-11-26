@@ -1,0 +1,28 @@
+name: Gladys OS ARM64 Build on demand
+
+on:  
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04   
+    if: "! contains(github.event.head_commit.message, '[skip ci]')"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 'master-arm64'
+      - 
+        name: 🖥️ Install pi-gen required dependencies
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update --fix-missing
+          sudo apt-get install -y coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc qemu-utils kpartx
+      - 
+        name: 🍓 Building Raspberry image
+        run: |
+          sudo CLEAN=1 BUILD_VERSION=${{ steps.get_version.outputs.VERSION }} ./build.sh -c config
+      - 
+        name: ✔️ Check prepared images
+        run: |
+          ls -al ./deploy
