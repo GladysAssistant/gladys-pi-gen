@@ -56,3 +56,6 @@ else
     -v /sys/class/gpio:/sys/class/gpio \
     gladysassistant/gladys:v4
 fi
+
+logger -t "gladys-init" "Prune unused images...."
+docker image prune -f
