@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+install -m 755 files/daemon.json "${ROOTFS_DIR}/etc/docker/"
+
 on_chroot <<EOF
 echo Patching certs...
 c_rehash /etc/ssl/certs
