@@ -1,6 +1,7 @@
 [Unit]
 Description=Initialize Gladys Assistant containers
-After=getty.target
+After=getty.target docker.service network-online.target
+Requires=network-online.target
 
 [Service]
 Type=simple

@@ -39,6 +39,7 @@ else
   docker stop gladys-setup-in-progress && docker rm gladys-setup-in-progress
   logger -t "gladys-init" "Gladys container is missing, creating them...."
   docker run -d \
+    --cgroupns host \
     --restart=always \
     --privileged \
     --network=host \
@@ -56,3 +57,6 @@ else
     -v /sys/class/gpio:/sys/class/gpio \
     gladysassistant/gladys:v4
 fi
+
+logger -t "gladys-init" "Prune unused images...."
+docker image prune -f
