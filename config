@@ -8,4 +8,4 @@ KEYBOARD_KEYMAP='fr'
 TIMEZONE_DEFAULT='Europe/Paris'
 STAGE_LIST='stage0 stage1 stage2 gladys'
 RELEASE=bullseye
-DEPLOY_ZIP=1
+DEPLOY_COMPRESSION=zip
