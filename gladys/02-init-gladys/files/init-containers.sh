@@ -39,7 +39,7 @@ else
   docker stop gladys-setup-in-progress && docker rm gladys-setup-in-progress
   logger -t "gladys-init" "Gladys container is missing, creating them...."
   docker run -d \
-    --cidfile /var/lib/gladysassistant/containerId \
+    --cgroupns host \
     --restart=always \
     --privileged \
     --network=host \
