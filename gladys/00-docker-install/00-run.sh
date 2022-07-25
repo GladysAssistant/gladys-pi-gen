@@ -5,6 +5,8 @@ echo Patching certs...
 c_rehash /etc/ssl/certs
 EOF
 
+install -m 755 files/daemon.json "${ROOTFS_DIR}/etc/docker/"
+
 on_chroot <<EOF
 curl -kfsSL https://get.docker.com -o /tmp/get-docker.sh
 sh /tmp/get-docker.sh
