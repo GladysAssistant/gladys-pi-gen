@@ -1,4 +1,4 @@
-name: Gladys OS Build
+name: Gladys OS ARM64 Build on demand
 
 on:  
   push:
@@ -12,6 +12,8 @@ jobs:
     if: "! contains(github.event.head_commit.message, '[skip ci]')"
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: 'arm64'
       - 
         name: Get the version (git tag)
         id: get_version
@@ -25,19 +27,18 @@ jobs:
           sudo apt-get update --fix-missing
           sudo apt-get install -y coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc qemu-utils kpartx gpg pigz
       - 
-        name: 🍓 Building Raspberry image
+        name: 🍓 Building 64Bits Raspberry image
         run: |
           sudo CLEAN=1 BUILD_VERSION=${{ steps.get_version.outputs.VERSION }} ./build.sh -c config
       - 
         name: ✔️ Check prepared images
         run: |
           ls -al ./deploy
-          test -f ./deploy/image_gladys-os-rpi.zip
       - 
         name: 🏷️ Rename files for release
         run: |
-          sudo mv ./deploy/gladys-os-rpi.info ./gladys-os-rpi-${{ steps.get_version.outputs.VERSION }}.info
-          sudo mv ./deploy/image_gladys-os-rpi.zip ./gladys-os-rpi-${{ steps.get_version.outputs.VERSION }}.zip
+          sudo mv ./deploy/gladys-os-rpi.info ./gladys-os-rpi64-${{ steps.get_version.outputs.VERSION }}.info
+          sudo mv ./deploy/image_gladys-os-rpi.zip ./gladys-os-rpi64-${{ steps.get_version.outputs.VERSION }}.zip
       - 
         name: 📦 Release
         uses: softprops/action-gh-release@v1
@@ -45,5 +46,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            gladys-os-rpi-${{ steps.get_version.outputs.VERSION }}.info
-            gladys-os-rpi-${{ steps.get_version.outputs.VERSION }}.zip
+            gladys-os-rpi64-${{ steps.get_version.outputs.VERSION }}.info
+            gladys-os-rpi64-${{ steps.get_version.outputs.VERSION }}.zip

@@ -58,3 +58,6 @@ else
     -v /etc/timezone:/etc/timezone:ro \
     gladysassistant/gladys:v4
 fi
+
+logger -t "gladys-init" "Prune unused images...."
+docker image prune -f

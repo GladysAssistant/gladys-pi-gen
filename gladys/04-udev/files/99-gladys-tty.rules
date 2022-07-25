@@ -10,12 +10,11 @@ SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="8a2a", SYMLINK+="t
 
 # zigbee2mqtt
 SUBSYSTEM=="tty", ATTRS{idVendor}=="0451", ATTRS{idProduct}=="16a8", SYMLINK+="tty-usb-zigbee"
-
+# ZZH!
+SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SYMLINK+="tty-usb-zigbee-zzh"
 
 # Arduino Uno
 SUBSYSTEM=="tty", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="0043", SYMLINK+="tty-usb-arduino-uno"
-# Arduino Nano
-SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", SYMLINK+="tty-usb-arduino-nano"
 # Arduino Due - Blue board
 SUBSYSTEM=="tty", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="003d", SYMLINK+="tty-usb-arduino-bluedue"
 # Arduino Due - Green board

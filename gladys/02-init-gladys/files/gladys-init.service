@@ -1,12 +1,15 @@
 [Unit]
 Description=Initialize Gladys Assistant containers
-After=getty.target
+After=getty.target docker.service network-online.target
+Requires=network-online.target
+IgnoreOnIsolate=true
 
 [Service]
 Type=simple
 RemainAfterExit=yes
 ExecStart=/var/lib/gladysassistant/init-containers.sh
 TimeoutStartSec=0
+KillMode=mixed
 
 [Install]
 WantedBy=default.target
