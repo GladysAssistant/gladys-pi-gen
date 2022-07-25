@@ -5,6 +5,7 @@ echo Patching certs...
 c_rehash /etc/ssl/certs
 EOF
 
+mkdir -p "${ROOTFS_DIR}/etc/docker"
 install -m 755 files/daemon.json "${ROOTFS_DIR}/etc/docker/"
 
 on_chroot <<EOF
