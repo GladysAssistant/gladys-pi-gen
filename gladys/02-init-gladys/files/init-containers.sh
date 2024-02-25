@@ -27,7 +27,7 @@ else
     --restart=always \
     -v /var/run/docker.sock:/var/run/docker.sock \
     containrrr/watchtower \
-    --cleanup --include-restarting
+    --cleanup --include-restarting --label-enable
 fi
 
 if [ -n "$docker_images_gladys" ]; then
@@ -56,6 +56,7 @@ else
     -v /sys/class/gpio:/sys/class/gpio \
     -v /etc/localtime:/etc/localtime:ro \
     -v /etc/timezone:/etc/timezone:ro \
+    --label=com.centurylinklabs.watchtower.enable=true \
     gladysassistant/gladys:v4
 fi
 
